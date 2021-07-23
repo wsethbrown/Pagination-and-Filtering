@@ -140,15 +140,18 @@ searchInput.addEventListener("keyup", event => {
    searchFunction(searchInput, data)
 })
 
+let showedError = false
+
 function showError() {
    const noResults = `<h3>No results found</h3>`
    let noResultsPage = document.querySelector(".header")
    noResultsPage.insertAdjacentHTML("afterend", noResults)
    console.log("There are no results")
+   showedError = true
 }
 
 function showErrorOnce() {
-   if (!showError) showError()
+   if (!showedError) showError()
 }
 
 // Call functions
