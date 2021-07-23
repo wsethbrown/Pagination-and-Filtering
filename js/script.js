@@ -86,6 +86,69 @@ function addPagination(list) {
    })
 }
 
+//Insert HTML for searchbar
+function searchBar() {
+   const header = document.querySelector('.header')
+   const searchBarHTML =
+   `<label for="search" class="student-search">
+      <span>Search by name</span>
+      <input id="search" placeholder="Search by name...">
+      <button id="searchButton" type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+   </label>`
+   header.insertAdjacentHTML("beforeend", searchBarHTML)
+}
+
+//Call the searchbar
+searchBar()
+
+const searchInput = document.querySelector('#search');
+const searchButton = document.querySelector('#searchButton');
+console.log(searchButton)
+
+//Handle input from searchBar
+function searchFunction(searchInput, students) {
+   let filteredStudents = []
+   console.log(searchInput)
+   console.log(students)
+   for (let i = 0; i < students.length; i++) {
+      let fullName = `${students[i].name.first} ${students[i].name.last}`
+     if (searchInput.value.length !== 0 && fullName.toLowerCase().includes(searchInput.value.toLowerCase())) {
+         filteredStudents.push(students[i])
+      }
+   }
+
+   if (filteredStudents.length > 0) {
+      showPage(filteredStudents, 1)
+      addPagination(filteredStudents)
+   } else {
+      showErrorOnce()
+      showPage(filteredStudents)
+      addPagination(filteredStudents)
+   }
+ }
+
+searchButton.addEventListener("click", event => {
+   event.preventDefault()
+   searchFunction(searchInput, data)
+})
+
+searchInput.addEventListener("keyup", event => {
+   event.preventDefault()
+   searchFunction(searchInput, data)
+})
+
+function showError() {
+   const noResults = `<h3>No results found</h3>`
+   let noResultsPage = document.querySelector(".header")
+   noResultsPage.insertAdjacentHTML("afterend", noResults)
+   console.log("There are no results")
+}
+
+function showErrorOnce() {
+   if (!showError) showError()
+}
+
 // Call functions
 showPage(data,1)
 addPagination(data)
+
