@@ -64,18 +64,18 @@ function addPagination(list) {
     linkList.insertAdjacentHTML("beforeend", pageButtons)
    }
 
-   //select the first button in the array and give it the Active class
+   // select the first button in the array and give it the Active class
    linkList.getElementsByTagName('button')[0].classList.add("active")
 
 
    linkList.addEventListener("click", event => {
 
-      //Call the showPage function when a button is clicked.
-      //Pass in "list" from addPagination function parameter and the # that's in the button's Text Content
-      //to provide showPage()'s required parameters
+      // Call the showPage function when a button is clicked.
+      // Pass in "list" from addPagination function parameter and the # that's in the button's Text Content
+      // to provide showPage()'s required parameters
       showPage(list, event.target.textContent)
 
-      //Remove Active class from all buttons before we apply it to the clicked button
+      // Remove Active class from all buttons before we apply it to the clicked button
       let nonActiveButtons = document.getElementsByTagName('button')
       for (let i = 0; i < nonActiveButtons.length; i++) {
          nonActiveButtons[i].classList.remove("active")
@@ -86,7 +86,7 @@ function addPagination(list) {
    })
 }
 
-//Insert HTML for searchbar
+// Insert HTML for searchbar
 function searchBar() {
    const header = document.querySelector('.header')
    const searchBarHTML =
@@ -98,50 +98,66 @@ function searchBar() {
    header.insertAdjacentHTML("beforeend", searchBarHTML)
 }
 
-//Call the searchbar
+// Call the searchbar
 searchBar()
 
 const searchInput = document.querySelector('#search');
 const searchButton = document.querySelector('#searchButton');
-console.log(searchButton)
+// console.log(searchButton)
 
-//Handle input from searchBar
+// Handle input from searchBar
 function searchFunction(searchInput, students) {
-   let filteredStudents = []
-   console.log(searchInput)
-   console.log(students)
+   let filteredStudents = [] //create a blank array of students that will be used to display matching search results
+   // console.log(searchInput)
+   // console.log(students)
+
+   // loop through all students, searching for matching letters in students names
    for (let i = 0; i < students.length; i++) {
+      // make it easier on ourselves, concat first and last names into one variable and compare against that
       let fullName = `${students[i].name.first} ${students[i].name.last}`
      if (searchInput.value.length !== 0 && fullName.toLowerCase().includes(searchInput.value.toLowerCase())) {
-         filteredStudents.push(students[i])
+         filteredStudents.push(students[i]) //add any matches to the empty array
       }
    }
 
+   // if there are any students in the array, show them on the page using showPage function and add pagination using ///////////addPagination function
    if (filteredStudents.length > 0) {
       showPage(filteredStudents, 1)
       addPagination(filteredStudents)
+      // if there are no characters in the search box, display default page. Useful if user deletes all characters
    } else if (searchInput.value.length === 0) {
       showPage(data, 1)
       addPagination(data)
    } else {
+      // if no results are found, show the Error function and show blank students with showPage, and show no pagination with addPagination
       showErrorOnce()
       showPage(filteredStudents)
       addPagination(filteredStudents)
    }
  }
 
+// Display results after user clicks the submit button on their search
 searchButton.addEventListener("click", event => {
    event.preventDefault()
    searchFunction(searchInput, data)
 })
 
+// Add a keyup listener to create a more responsive app, showing results instantly as user types
 searchInput.addEventListener("keyup", event => {
    event.preventDefault()
    searchFunction(searchInput, data)
 })
 
-let showedError = false
 
+// Error handling if there are no results
+let showedError = false //Set variable to false because we haven't called showError yet
+
+// Check to see if we have set showedError to true, if not, call showError function
+function showErrorOnce() {
+   if (!showedError) showError()
+}
+
+// Insert HTML into page if no results are found in search
 function showError() {
    const noResults = `<h3>No results found</h3>`
    let noResultsPage = document.querySelector(".header")
@@ -150,9 +166,7 @@ function showError() {
    showedError = true
 }
 
-function showErrorOnce() {
-   if (!showedError) showError()
-}
+
 
 // Call functions
 showPage(data,1)
