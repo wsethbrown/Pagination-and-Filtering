@@ -120,6 +120,9 @@ function searchFunction(searchInput, students) {
    if (filteredStudents.length > 0) {
       showPage(filteredStudents, 1)
       addPagination(filteredStudents)
+   } else if (searchInput.value.length === 0) {
+      showPage(data, 1)
+      addPagination(data)
    } else {
       showErrorOnce()
       showPage(filteredStudents)
