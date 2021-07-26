@@ -107,9 +107,6 @@ const searchButton = document.querySelector('#searchButton');
 
 // Handle input from searchBar
 function searchFunction(searchInput, students) {
-   if (document.querySelector('.page > h3')) {
-      document.querySelector('.page').removeChild('h3')
-   }
    let filteredStudents = [] //create a blank array of students that will be used to display matching search results
 
    // loop through all students, searching for matching letters in students names
@@ -123,8 +120,15 @@ function searchFunction(searchInput, students) {
 
    // if there are any students in the array, show them on the page using showPage function and add pagination using ///////////addPagination function
    if (filteredStudents.length > 0) {
-      showPage(filteredStudents, 1  )
-      addPagination(filteredStudents)
+      //See if the error message is currently on the page
+      if (document.querySelector('.page > h3')) {
+         let parentNode = document.querySelector('.page')
+         let childNode = document.querySelector('.page > h3')
+         parentNode.removeChild(childNode)
+      }
+         showPage(filteredStudents, 1  )
+         addPagination(filteredStudents)
+         showedError = false //Reset the boolean so that if we input a search that returns no results, we see the error message again
       // if there are no characters in the search box, display default page. Useful if user deletes all characters
    } else if (searchInput.value.length === 0) {
       showPage(data, 1)
