@@ -121,16 +121,15 @@ function searchFunction(searchInput, students) {
    // if there are any students in the array, show them on the page using showPage function and add pagination using ///////////addPagination function
    if (filteredStudents.length > 0) {
       //See if the error message is currently on the page
-      if (document.querySelector('.page > h3')) {
-         let parentNode = document.querySelector('.page')
-         let childNode = document.querySelector('.page > h3')
-         parentNode.removeChild(childNode)
-      }
+      //displayError() checks if the error message "No Students Found" is displayed on the page. If it is, it's removed
+      displayError()
          showPage(filteredStudents, 1  )
          addPagination(filteredStudents)
          showedError = false //Reset the boolean so that if we input a search that returns no results, we see the error message again
       // if there are no characters in the search box, display default page. Useful if user deletes all characters
    } else if (searchInput.value.length === 0) {
+      //displayError() checks if the error message "No Students Found" is displayed on the page. If it is, it's removed
+      displayError()
       showPage(data, 1)
       addPagination(data)
    } else {
@@ -170,6 +169,14 @@ function showError() {
    showedError = true
 }
 
+//displayError() checks if the error message "No Students Found" is displayed on the page. If it is, it's removed
+function displayError() {
+   if (document.querySelector('.page > h3')) {
+      let parentNode = document.querySelector('.page')
+      let childNode = document.querySelector('.page > h3')
+      parentNode.removeChild(childNode)
+   }
+}
 // Call functions
 showPage(data,1)
 addPagination(data)
