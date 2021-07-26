@@ -68,7 +68,7 @@ function addPagination(list) {
    linkList.getElementsByTagName('button')[0].classList.add("active")
 
 
-   linkList.addEventListener("click", event => {
+   document.getElementsByTagName('button').addEventListener("click", event => {
 
       // Call the showPage function when a button is clicked.
       // Pass in "list" from addPagination function parameter and the # that's in the button's Text Content
@@ -122,8 +122,9 @@ function searchFunction(searchInput, students) {
 
    // if there are any students in the array, show them on the page using showPage function and add pagination using ///////////addPagination function
    if (filteredStudents.length > 0) {
-      showPage(filteredStudents, 1)
+      showPage(filteredStudents, 1  )
       addPagination(filteredStudents)
+      document.getElementById("error-message").display.style === "none"
       // if there are no characters in the search box, display default page. Useful if user deletes all characters
    } else if (searchInput.value.length === 0) {
       showPage(data, 1)
@@ -133,6 +134,7 @@ function searchFunction(searchInput, students) {
       showErrorOnce()
       showPage(filteredStudents)
       addPagination(filteredStudents)
+      document.getElementById("error-message").display.style === "block"
    }
  }
 
@@ -159,14 +161,11 @@ function showErrorOnce() {
 
 // Insert HTML into page if no results are found in search
 function showError() {
-   const noResults = `<h3>No results found</h3>`
+   const noResults = `<h3 id="error-message">No results found</h3>`
    let noResultsPage = document.querySelector(".header")
    noResultsPage.insertAdjacentHTML("afterend", noResults)
-   console.log("There are no results")
    showedError = true
 }
-
-
 
 // Call functions
 showPage(data,1)
