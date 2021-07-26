@@ -65,10 +65,10 @@ function addPagination(list) {
    }
 
    // select the first button in the array and give it the Active class
-   linkList.getElementsByTagName('button')[0].classList.add("active")
+   linkList.getElementsByTagName('button').length > 0 ? linkList.getElementsByTagName('button')[0].classList.add("active") : linkList.innerHTML = ''
 
 
-   document.getElementsByTagName('button').addEventListener("click", event => {
+   linkList.addEventListener("click", event => {
 
       // Call the showPage function when a button is clicked.
       // Pass in "list" from addPagination function parameter and the # that's in the button's Text Content
@@ -107,9 +107,10 @@ const searchButton = document.querySelector('#searchButton');
 
 // Handle input from searchBar
 function searchFunction(searchInput, students) {
+   if (document.querySelector('.page > h3')) {
+      document.querySelector('.page').removeChild('h3')
+   }
    let filteredStudents = [] //create a blank array of students that will be used to display matching search results
-   // console.log(searchInput)
-   // console.log(students)
 
    // loop through all students, searching for matching letters in students names
    for (let i = 0; i < students.length; i++) {
@@ -124,7 +125,6 @@ function searchFunction(searchInput, students) {
    if (filteredStudents.length > 0) {
       showPage(filteredStudents, 1  )
       addPagination(filteredStudents)
-      document.getElementById("error-message").display.style === "none"
       // if there are no characters in the search box, display default page. Useful if user deletes all characters
    } else if (searchInput.value.length === 0) {
       showPage(data, 1)
@@ -134,7 +134,6 @@ function searchFunction(searchInput, students) {
       showErrorOnce()
       showPage(filteredStudents)
       addPagination(filteredStudents)
-      document.getElementById("error-message").display.style === "block"
    }
  }
 
