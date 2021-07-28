@@ -69,7 +69,7 @@ function addPagination(list) {
 
 
    linkList.addEventListener("click", event => {
-      if (event.target && event.target.matches('button')) {
+      if (event.target.matches('button')) {
          // Call the showPage function when a button is clicked.
          // Pass in "list" from addPagination function parameter and the # that's in the button's Text Content
          // to provide showPage()'s required parameters
