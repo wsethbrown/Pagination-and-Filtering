@@ -68,21 +68,22 @@ function addPagination(list) {
    linkList.getElementsByTagName('button').length > 0 ? linkList.getElementsByTagName('button')[0].classList.add("active") : linkList.innerHTML = ''
 
 
-   document.querySelector('button').addEventListener("click", event => {
+   linkList.addEventListener("click", event => {
+      if (event.target && event.target.matches('button')) {
+         // Call the showPage function when a button is clicked.
+         // Pass in "list" from addPagination function parameter and the # that's in the button's Text Content
+         // to provide showPage()'s required parameters
+         showPage(list, event.target.textContent)
 
-      // Call the showPage function when a button is clicked.
-      // Pass in "list" from addPagination function parameter and the # that's in the button's Text Content
-      // to provide showPage()'s required parameters
-      showPage(list, event.target.textContent)
+         // Remove Active class from all buttons before we apply it to the clicked button
+         let nonActiveButtons = document.getElementsByTagName('button')
+         for (let i = 0; i < nonActiveButtons.length; i++) {
+            nonActiveButtons[i].classList.remove("active")
+         }
 
-      // Remove Active class from all buttons before we apply it to the clicked button
-      let nonActiveButtons = document.getElementsByTagName('button')
-      for (let i = 0; i < nonActiveButtons.length; i++) {
-         nonActiveButtons[i].classList.remove("active")
+         //Add the active button to the clicked button
+         event.target.classList.add("active")
       }
-
-      //Add the active button to the clicked button
-      event.target.classList.add("active")
    })
 }
 
