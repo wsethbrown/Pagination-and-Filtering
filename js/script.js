@@ -68,7 +68,7 @@ function addPagination(list) {
    linkList.getElementsByTagName('button').length > 0 ? linkList.getElementsByTagName('button')[0].classList.add("active") : linkList.innerHTML = ''
 
 
-   linkList.addEventListener("click", event => {
+   document.querySelector('button').addEventListener("click", event => {
 
       // Call the showPage function when a button is clicked.
       // Pass in "list" from addPagination function parameter and the # that's in the button's Text Content
